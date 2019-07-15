@@ -55,7 +55,17 @@ export default class Field extends Component {
   }
 
   filterOption = (input, option) => {
-    const isInChildren = option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 
+    let isInChildren = false;
+    if (typeof option.props.children === "string") {
+        isInChildren = option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 
+    } else {
+        option.props.children.forEach(str => {
+            if (str.toLowerCase().indexOf(input.toLowerCase()) >= 0) {
+                isInChildren = true;
+            }
+        })
+    }
+    
     const isInValue    = option.props.value.toLowerCase().indexOf(input.toLowerCase()) >= 0 
     let isInGroupLabel = false 
 
